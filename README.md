@@ -5,4 +5,5 @@ Build with react native
 
 ### Package require
 - [native-base](https://www.npmjs.com/package/native-base)
+- [react-navigation](https://www.npmjs.com/package/react-navigation)
 
