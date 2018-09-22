@@ -1,0 +1,34 @@
+{
+  name: "Steven Rogers",
+  phone: "086325237236",
+  avatar: 'https://pbs.twimg.com/profile_images/938813312506064896/ciY68hiP_400x400.jpg'
+},
+{
+  name: "Tony Stark",
+  phone: "08232832933",
+  avatar: 'https://vignette.wikia.nocookie.net/marvel-movies/images/9/98/Vengadores_Tony_Stark.jpg/revision/latest/top-crop/width/240/height/240?cb=20120427230300&path-prefix=es'
+},
+{
+  name: "Peter Parker",
+  phone: "086325237236",
+  avatar: 'https://www.technobuffalo.com/wp-content/uploads/2017/03/spider-man-homecoming-trailer-2-08-470x310@2x.jpg'
+},
+{
+  name: "Peter Quill",
+  phone: "0872635335",
+  avatar: 'https://static.comicvine.com/uploads/original/11113/111139139/6424825-4811711144-star_.jpg'
+}
+
+<TouchableOpacity>
+  <ListItem avatar
+    onPress={() => this.props.navigation.navigate('Detail', data)}
+  >
+    <Left>
+      <Thumbnail source={{uri: data.avatar}} />
+    </Left>
+    <Body>
+      <Text>{data.name}</Text>
+      <Text note>{data.phone}</Text>
+    </Body>
+  </ListItem>
+</TouchableOpacity>
