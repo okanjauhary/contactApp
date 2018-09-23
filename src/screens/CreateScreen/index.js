@@ -15,19 +15,20 @@ class CreateScreen extends Component{
   }
 
   __AddContact = () => {
-    let ava = "https://cdn.pixabay.com/photo/2017/07/18/23/23/user-2517433_960_720.png"
     let data = {
       "name": this.state.name,
       "phone": this.state.phone,
-      "avatar": (this.state.avatar == '') ? ava : this.state.avatar
+      "avatar": (this.state.avatar == '') ? null : this.state.avatar
     }
     this.setState({isPressed: true})
     setTimeout(() => {
       if(data.name != '' && data.phone != '' && data.avatar != ''){
         this.setState({isInvalid: false})
-        axios.post('http://rest.learncode.academy/api/sulhan/contacts', data)
-        this.props.dispatch(fetchContact())
-        this.props.navigation.navigate('Home')
+        axios.post('http://192.168.0.6:3000/api/contacts/', data)
+            .then(res => {
+              this.props.dispatch(fetchContact())
+              this.props.navigation.navigate('Home')
+            })
       }else{
         this.setState({isPressed: false})
         this.setState({isInvalid: true})

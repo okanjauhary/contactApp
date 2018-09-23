@@ -25,13 +25,13 @@ class ContactLists extends Component {
       `Apakah kamu yakin ingin menghapus ${data.name}`,
       [
         {text: 'Cancel', style: 'cancel'},
-        {text: 'OK', onPress: () => this.__deleteContact(data.id)}
+        {text: 'OK', onPress: () => this.__deleteContact(data._id)}
       ]
     )
   }
 
   __deleteContact = (id) => {
-      axios.delete(`http://rest.learncode.academy/api/sulhan/contacts/${id}`)
+      axios.delete(`http://192.168.0.6:3000/api/contacts/${id}`)
             .then( res => {
               this.props.dispatch(fetchContact())
               this.props.navigation.navigate('Home')
@@ -55,7 +55,9 @@ class ContactLists extends Component {
                       style={{paddingLeft: 10}}
                     >
                       <Left>
-                        <Thumbnail source={{uri: rowData.avatar}} />
+                        <Thumbnail
+                          source={{uri: (rowData.avatar == null) ? 'https://cdn.pixabay.com/photo/2017/07/18/23/23/user-2517433_960_720.png' : rowData.avatar}}
+                        />
                       </Left>
                       <Body>
                         <Text>{rowData.name}</Text>

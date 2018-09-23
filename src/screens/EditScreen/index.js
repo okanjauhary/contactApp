@@ -22,13 +22,13 @@ class EditScreen extends Component{
       `Apakah kamu yakin ingin menghapus ${data.name}`,
       [
         {text: 'Cancel', style: 'cancel'},
-        {text: 'OK', onPress: () => this.__deleteContact(data.id) }
+        {text: 'OK', onPress: () => this.__deleteContact(data._id) }
       ]
     )
   }
 
   __deleteContact = (id) => {
-      axios.delete(`http://rest.learncode.academy/api/sulhan/contacts/${id}`)
+      axios.delete(`http://192.168.0.6:3000/api/contacts/${id}`)
             .then( res => {
               this.props.dispatch(fetchContact())
               this.props.navigation.navigate('Home')
@@ -47,14 +47,14 @@ class EditScreen extends Component{
     this.setState({isPressed: true})
 
     setTimeout(() => {
-      axios.put(`http://rest.learncode.academy/api/sulhan/contacts/${id}`, data)
+      axios.put(`http://192.168.0.6:3000/api/contacts/${id}`, data)
            .then(res => {
                if(contact.sc == "Home"){
                  this.props.dispatch(fetchContact())
                }
 
                if(contact.sc == "Detail"){
-                 this.props.dispatch(getContact(contact.id))
+                 this.props.dispatch(getContact(contact._id))
                }
 
                this.props.navigation.pop()
@@ -98,7 +98,7 @@ class EditScreen extends Component{
             success
             block
             style={{marginBottom: 10}}
-            onPress={() => this.__editContact(contact.id)}
+            onPress={() => this.__editContact(contact._id)}
           >
             {
               this.state.isPressed ? <ActivityIndicator size="large" color="#ddd" /> :

@@ -14,7 +14,7 @@ class DetailContactScreen extends Component{
   }
 
   componentDidMount(){
-    this.props.dispatch(getContact(this.props.navigation.state.params.id))
+    this.props.dispatch(getContact(this.props.navigation.state.params._id))
   }
 
   __imageParallax = e => {
@@ -62,7 +62,7 @@ class DetailContactScreen extends Component{
           onScroll={this.__imageParallax}
         >
          <View style={{position: 'relative'}}>
-          <Image source={{uri: contact.avatar}} style={ {
+          <Image source={{uri: (contact.avatar == null) ? 'https://cdn.pixabay.com/photo/2017/07/18/23/23/user-2517433_960_720.png' : contact.avatar}} style={ {
             width: `100%`,
             height: 350,
             position: 'relative',
