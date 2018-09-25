@@ -1,15 +1,20 @@
 import React, {Component} from 'react'
-import { Container, Content, Text, Button, Form, Input, Item, Label, Card, Icon } from 'native-base'
+import { Container, Content, Text, Button, Form, Input, Item, Label, Card, Header, Right, Left, Title, Body } from 'native-base'
 import axios from 'axios'
 import {connect} from 'react-redux';
 import {TouchableOpacity, ActivityIndicator, View, Clipboard} from 'react-native'
 import {fetchContact} from './../../actions/contactAct'
+import * as C from '../../assets/styles/colors';
+import {Transition} from 'react-navigation-fluid-transitions';
+import Icon from 'react-native-vector-icons/Feather';
 
 class CreateScreen extends Component{
   state = {
     name: '',
     phone: '',
     avatar: '',
+    email: '',
+    address: '',
     isPressed: false,
     isInvalid: false
   }
@@ -18,11 +23,13 @@ class CreateScreen extends Component{
     let data = {
       "name": this.state.name,
       "phone": this.state.phone,
+      "email": (this.state.email == '') ? null : this.state.email,
+      "avatar": (this.state.address == '') ? null : this.state.address,
       "avatar": (this.state.avatar == '') ? null : this.state.avatar
     }
     this.setState({isPressed: true})
     setTimeout(() => {
-      if(data.name != '' && data.phone != '' && data.avatar != ''){
+      if(data.name != '' && data.phone != ''){
         this.setState({isInvalid: false})
         axios.post('http://192.168.0.6:3000/api/contacts/', data)
             .then(res => {
@@ -43,8 +50,32 @@ class CreateScreen extends Component{
 
     return(
       <Container>
+
+        <Header
+           style={{backgroundColor: C._BROWN}}
+           androidStatusBarColor= {C._STATUSBAR}
+          >
+           <Left>
+             <Button transparent onPress={() => this.props.navigation.pop()}>
+               <Transition shared="btn-left">
+                 <Icon name='arrow-left' size={26} style={{color: 'white'}}/>
+               </Transition>
+             </Button>
+           </Left>
+           <Body>
+              <Title>Create contact</Title>
+           </Body>
+           <Right>
+             <Button transparent onPress={() => this.props.navigation.pop()}>
+               <Text style={{color: '#fff', fontWeight: 'bold'}}>Batal</Text>
+             </Button>
+           </Right>
+         </Header>
+
+
         <Content style={{padding: 10}}>
          <Card transparent>
+
            <Form style={{marginBottom: 20}}>
             <Item stackedLabel
               style={{borderBottomColor: (isInvalid && name == '') ? '#a72626' : '#ccc'}}
@@ -64,36 +95,48 @@ class CreateScreen extends Component{
               />
             </Item>
             <Item stackedLabel>
+              <Label>Email (Optional)</Label>
+              <Input
+                onChangeText={(text) => this.setState({email: text})}
+                keyboardType='email-address'
+              />
+            </Item>
+
+            <Item stackedLabel>
+              <Label>Address (Optional)</Label>
+              <Input
+                onChangeText={(text) => this.setState({address: text})}
+              />
+            </Item>
+
+            <Item stackedLabel>
               <Label>Avatar (Optional)</Label>
               <Input
                 onChangeText={(text) => this.setState({avatar: text})}
               />
-              <View style={{ position: 'absolute', right: 10}}>
-                <Icon name="link" style={{fontSize: 30, color: '#555'}}
+              <View style={{ position: 'absolute',top: 10, right: 10}}>
+                <Icon name="clipboard" size={25} style={{color: '#555'}}
                   onPress={() => this.setState({avatar: Clipboard.getString()})}
                 />
               </View>
             </Item>
+
           </Form>
-          <Button
-            success
-            block
-            style={{marginBottom: 10}}
-            onPress = {this.__AddContact}
-            disabled={this.state.isPressed}
-          >
-            {
-              this.state.isPressed ? <ActivityIndicator size="large" color="#ddd" /> :
-              <Text>Add Contact </Text>
-            }
-          </Button>
-          <Button
-            warning
-            block
-            onPress={() => this.props.navigation.goBack()}
-          >
-            <Text>Cancel</Text>
-          </Button>
+
+          <Transition shared="tab-to-btn">
+            <Button
+              warning
+              block
+              style={{marginBottom: 10}}
+              onPress = {this.__AddContact}
+              disabled={this.state.isPressed}
+            >
+              {
+                this.state.isPressed ? <ActivityIndicator size="large" color="#ddd" /> :
+                <Text>Add Contact </Text>
+              }
+            </Button>
+          </Transition>
          </Card>
         </Content>
       </Container>

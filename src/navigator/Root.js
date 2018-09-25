@@ -1,10 +1,11 @@
 import {createStackNavigator} from 'react-navigation'
+import { Transition, FluidNavigator } from 'react-navigation-fluid-transitions';
 import HomeScreen from './../screens/HomeScreen'
 import CreateScreen from './../screens/CreateScreen'
 import DetailScreen from './../screens/DetailScreen'
 import EditScreen from './../screens/EditScreen'
 
-const Root = createStackNavigator({
+const Root = FluidNavigator({
   Home: {
     screen: HomeScreen,
     navigationOptions: {

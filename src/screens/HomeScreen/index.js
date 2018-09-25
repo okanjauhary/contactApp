@@ -1,62 +1,113 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, ActivityIndicator, Dimensions, StatusBar} from 'react-native'
-import { Container, Header, Content, List, ListItem, Button, Icon, Text, SwipeRow } from 'native-base'
-
+import { StyleSheet, View, ActivityIndicator, Dimensions, FlatList} from 'react-native'
+import { Container, Header, Content, List, ListItem, Button, Thumbnail, Text, Left, Right, Body, Title, Tabs, Tab, TabHeading } from 'native-base'
+import Icon from 'react-native-vector-icons/Feather';
 import {connect} from 'react-redux'
 import axios from 'axios'
+import {Transition} from 'react-navigation-fluid-transitions';
 
-import ContactLists from './components/ContactLists'
+import * as C from '../../assets/styles/colors';
 
-import {fetchContact} from './../../actions/contactAct'
+import {fetchContact, getContact} from './../../actions/contactAct'
 
 class HomeScreen extends Component {
-
-  static navigationOptions = ({navigation}) => ({
-    headerRight: (
-        <View style={{flexDirection: 'row', marginRight: 20}}>
-          <Icon name="search" style={{marginRight: 20}}/>
-          <Icon name="more"/>
-        </View>
-    )
-  })
 
   componentDidMount(){
     this.props.dispatch(fetchContact())
   }
 
-  render(){
-    if(this.props.contact.fetching){
-      return(
-        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-           <ActivityIndicator size="large" color="#4e4e4e" />
-        </View>
-      )
-    }
+  renderContact = ({item, index}) => (
+    <ListItem avatar onPress={() => {
+        this.props.dispatch(getContact(item._id))
+        this.props.navigation.push('Detail', {index})
+    }}>
+      <Left>
+        <Transition shared={`image${index}`}>
+          <Thumbnail source={{ uri: item.avatar == null ? 'https://startupsclub.com/image/user-default.png' : item.avatar }} />
+        </Transition>
+      </Left>
+      <Body>
+        <Text>{item.name}</Text>
+        <Text note>{item.phone}</Text>
+      </Body>
+    </ListItem>
+  )
 
+  render(){
     return(
       <Container>
-        <StatusBar
-           backgroundColor="#1f4f32"
-           barStyle="light-content"
-         />
+         <Header
+          style={{backgroundColor: C._BROWN}}
+          androidStatusBarColor= {C._STATUSBAR}
+         >
+          <Left>
+            <Button transparent>
+              <Transition shared="btn-left">
+                <Icon name='grid' size={26} style={{color: 'white'}}/>
+              </Transition>
+            </Button>
+          </Left>
+          <Body>
+            <Title>Contact list</Title>
+          </Body>
+          <Right>
+            <Button transparent>
+              <Icon name='search' size={26} style={{color: 'white'}}/>
+            </Button>
+          </Right>
+        </Header>
         <Content>
-          {
-            (this.props.contact.data.length > 0) ?
-              <ContactLists data={this.props.contact.data} /> :
-              <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', height: (Dimensions.get('screen').height)/2}}>
-                <Icon name="contact" style={{color: '#ddd', fontSize: 70}}/>
-                <Text style={{fontSize: 30, color: '#ddd'}}>No contacts</Text>
+
+        <Transition shared="tab-to-btn">
+          <Tabs tabBarUnderlineStyle={{backgroundColor: C._DIRTYWHITE}} locked={true}>
+            <Tab
+              heading={
+                <TabHeading style={{backgroundColor: C._ORANGE}}>
+                   <Text style={{color: '#fff'}}>All</Text>
+                 </TabHeading>
+               }
+            >
+              <FlatList
+                data={this.props.contact.data}
+                renderItem={this.renderContact}
+                keyExtractor={(_, index) => `${index}`}
+              />
+            </Tab>
+            <Tab
+              heading={
+                <TabHeading style={{backgroundColor: C._ORANGE}}>
+                   <Text style={{color: '#fff'}}>Groups</Text>
+                 </TabHeading>
+               }
+            >
+              <View>
+                <Text>Tab 2</Text>
               </View>
-          }
+            </Tab>
+            <Tab
+              heading={
+                <TabHeading style={{backgroundColor: C._ORANGE}}>
+                   <Text style={{color: '#fff'}}>Favorites</Text>
+                 </TabHeading>
+               }
+            >
+              <View>
+                <Text>Tab 3</Text>
+              </View>
+            </Tab>
+          </Tabs>
+        </Transition>
+
         </Content>
+
         <Button
-            success
             rounded
             style={styles.buttonAdd}
             onPress={() => this.props.navigation.push('Create')}
           >
-            <Icon name="add" style={{fontSize: 35, fontWeight: 'bold'}}/>
+            <Icon name="user-plus" style={{fontSize: 28, color: '#fff', fontWeight: 'bold'}}/>
         </Button>
+
       </Container>
     )
   }
@@ -70,8 +121,9 @@ const mapStateToProps = (state) => {
 
 const styles = StyleSheet.create({
   buttonAdd: {
-    width: 65,
-    height: 65,
+    width: 55,
+    height: 55,
+    backgroundColor: C._ORANGE,
     justifyContent: 'center',
     position: 'absolute',
     right: 30,

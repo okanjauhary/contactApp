@@ -1,9 +1,12 @@
 import React, {Component} from 'react'
-import { Container, Content, Text, Button, Form, Input, Item, Label, Card } from 'native-base'
+import { Container, Content, Text, Button, Form, Input, Item, Label, Card, Header, Left, Right, Title, Body } from 'native-base'
 import {TouchableOpacity, Alert, ActivityIndicator} from 'react-native'
 import {connect} from 'react-redux';
 import axios from 'axios';
 import {fetchContact, getContact} from './../../actions/contactAct'
+import * as C from '../../assets/styles/colors';
+import Icon from 'react-native-vector-icons/Feather';
+import {Transition} from 'react-navigation-fluid-transitions';
 
 class EditScreen extends Component{
   static navigationOptions = ({navigation}) => ({
@@ -13,6 +16,8 @@ class EditScreen extends Component{
     name: this.props.navigation.state.params.name,
     phone: this.props.navigation.state.params.phone,
     avatar: this.props.navigation.state.params.avatar,
+    email: this.props.navigation.state.params.email,
+    address: this.props.navigation.state.params.address,
     isPressed: false
   }
 
@@ -39,7 +44,9 @@ class EditScreen extends Component{
     let data = {
       "name": this.state.name,
       "phone": this.state.phone,
-      "avatar": (this.state.avatar == '') ? this.props.navigation.state.params.avatar : this.state.avatar
+      "avatar": this.state.avatar == '' ? null : this.state.avatar,
+      "email" : this.state.email == '' ? null : this.state.email,
+      "address" : this.state.address == '' ? null : this.state.address
     }
 
     let contact = this.props.navigation.state.params
@@ -68,6 +75,28 @@ class EditScreen extends Component{
 
     return(
       <Container>
+
+        <Header
+           style={{backgroundColor: C._BROWN}}
+           androidStatusBarColor= {C._STATUSBAR}
+          >
+           <Left>
+             <Button transparent onPress={() => this.props.navigation.pop()}>
+              <Transition shared="btn-left">
+               <Icon name='arrow-left' size={26} style={{color: 'white'}}/>
+              </Transition>
+             </Button>
+           </Left>
+           <Body>
+             <Title>{contact.name}</Title>
+           </Body>
+           <Right>
+             <Button transparent onPress={() => this.handleDelete(contact)}>
+               <Icon name='trash-2' size={26} style={{color: 'white'}}/>
+             </Button>
+           </Right>
+         </Header>
+
         <Content style={{padding: 10}}>
          <Card transparent>
            <Form style={{marginBottom: 20}}>
@@ -87,15 +116,32 @@ class EditScreen extends Component{
               />
             </Item>
             <Item stackedLabel>
+              <Label>Email (Optional)</Label>
+              <Input
+                value={this.state.email}
+                onChangeText={(text) => this.setState({email: text})}
+              />
+            </Item>
+
+            <Item stackedLabel>
+              <Label>Address (Optional)</Label>
+              <Input
+                value={this.state.address}
+                onChangeText={(text) => this.setState({address: text})}
+              />
+            </Item>
+
+            <Item stackedLabel>
               <Label>Avatar (Optional)</Label>
               <Input
                 value={this.state.avatar}
                 onChangeText={(text) => this.setState({avatar: text})}
               />
             </Item>
+
           </Form>
           <Button
-            success
+            danger
             block
             style={{marginBottom: 10}}
             onPress={() => this.__editContact(contact._id)}
@@ -105,13 +151,7 @@ class EditScreen extends Component{
               <Text>Save contact</Text>
             }
           </Button>
-          <Button
-            danger
-            block
-            onPress={() => this.handleDelete(contact)}
-          >
-            <Text>Delete contact</Text>
-          </Button>
+
          </Card>
         </Content>
       </Container>

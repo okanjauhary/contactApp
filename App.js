@@ -7,10 +7,14 @@ import Root from './src/navigator/Root'
 
 type Props = {};
 export default class App extends Component{
+
+  static router = Root.router
+
   render() {
+    const {navigation} = this.props;
     return (
       <Provider store={store}>
-        <Root />
+        <Root navigation={navigation}/>
       </Provider>
     );
   }

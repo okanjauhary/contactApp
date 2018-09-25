@@ -1,46 +1,35 @@
 import {StyleSheet} from 'react-native'
+import * as C from '../../assets/styles/colors'
+
 const styles = StyleSheet.create({
-  header: {
-    width: '100%',
+  imageHeader: {
     position: 'absolute',
-    zIndex: 99999,
     top: 0,
-    flexDirection: 'row',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  imageRounded: {
+    height: 120,
+    width: 120,
+    borderWidth: 4,
+    borderColor: '#fff',
+    borderRadius: 60,
+  },
+  contactName: {
+    alignItems: 'center',
+    marginTop: 15
   },
   body: {
-    backgroundColor: 'white',
-    paddingTop: 20,
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
     position: 'relative',
-    zIndex: 9,
-    top: -20
+    backgroundColor: C._DIRTYWHITE,
+    padding: 10
   },
-  name: {
-    position: 'absolute',
-    bottom: 40,
-    left: 20
-  },
-  content: {
-    padding: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd'
-  },
-  contentLabel: {
-    color: '#bbb',
-    fontSize: 15,
-    marginBottom: 15
-  },
-  buttonEdit: {
-    width: 65,
-    height: 65,
-    justifyContent: 'center',
-    position: 'absolute',
-    zIndex: 9999,
-    right: 30,
-    bottom: 40,
-    elevation: 4
-  },
+  cardHeader: {
+    flexDirection: 'row'
+  }
 })
 
 export default styles
