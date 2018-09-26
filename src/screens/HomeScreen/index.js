@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, ActivityIndicator, Dimensions, FlatList} from 'react-native'
-import { Container, Header, Content, List, ListItem, Button, Thumbnail, Text, Left, Right, Body, Title, Tabs, Tab, TabHeading } from 'native-base'
+import { View, FlatList} from 'react-native'
+import { Container, Header, Content, ListItem, Button, Thumbnail, Text, Left, Right, Body, Title, Tabs, Tab, TabHeading } from 'native-base'
 import Icon from 'react-native-vector-icons/Feather';
 import {connect} from 'react-redux'
-import axios from 'axios'
 import {Transition} from 'react-navigation-fluid-transitions';
 
 import * as C from '../../assets/styles/colors';
+import {styles} from '../../assets/styles/home';
 
 import {fetchContact, getContact} from './../../actions/contactAct'
 
-class HomeScreen extends Component {
 
+class HomeScreen extends Component {
   componentDidMount(){
     this.props.dispatch(fetchContact())
   }
 
-  renderContact = ({item, index}) => (
+  renderContactList = ({item, index}) => (
     <ListItem avatar onPress={() => {
         this.props.dispatch(getContact(item._id))
         this.props.navigation.push('Detail', {index})
@@ -67,11 +67,27 @@ class HomeScreen extends Component {
                  </TabHeading>
                }
             >
-              <FlatList
-                data={this.props.contact.data}
-                renderItem={this.renderContact}
-                keyExtractor={(_, index) => `${index}`}
-              />
+
+            {
+              (this.props.contact.data.length > 0) ?
+                <FlatList
+                  data={this.props.contact.data}
+                  renderItem={this.renderContactList}
+                  keyExtractor={(_, index) => `${index}`}
+                /> :
+
+                <View style={styles.noData}>
+                   <Icon name='user' size={60} style={styles.iconNoData} />
+                   <Text style={{fontSize: 25, color: '#ddd'}}>No contact</Text>
+                   <Button
+                    small style={styles.btnAddNoData}
+                    onPress={() => this.props.navigation.push('Create')}
+                   >
+                      <Text>Add new contact</Text>
+                   </Button>
+                </View>
+            }
+
             </Tab>
             <Tab
               heading={
@@ -118,18 +134,5 @@ const mapStateToProps = (state) => {
     contact: state.contact
   }
 }
-
-const styles = StyleSheet.create({
-  buttonAdd: {
-    width: 55,
-    height: 55,
-    backgroundColor: C._ORANGE,
-    justifyContent: 'center',
-    position: 'absolute',
-    right: 30,
-    bottom: 40,
-    elevation: 4
-  }
-})
 
 export default connect(mapStateToProps)(HomeScreen)

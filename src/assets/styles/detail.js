@@ -29,6 +29,17 @@ const styles = StyleSheet.create({
   },
   cardHeader: {
     flexDirection: 'row'
+  },
+  buttonEdit: {
+    width: 55,
+    height: 55,
+    justifyContent: 'center',
+    position: 'absolute',
+    zIndex: 9999,
+    right: 30,
+    bottom: 40,
+    elevation: 4,
+    backgroundColor: C._ORANGE
   }
 })
 

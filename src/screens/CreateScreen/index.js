@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { Container, Content, Text, Button, Form, Input, Item, Label, Card, Header, Right, Left, Title, Body } from 'native-base'
 import axios from 'axios'
 import {connect} from 'react-redux';
-import {TouchableOpacity, ActivityIndicator, View, Clipboard} from 'react-native'
+import { ActivityIndicator, View, Clipboard} from 'react-native'
 import {fetchContact} from './../../actions/contactAct'
 import * as C from '../../assets/styles/colors';
 import {Transition} from 'react-navigation-fluid-transitions';
@@ -31,7 +31,7 @@ class CreateScreen extends Component{
     setTimeout(() => {
       if(data.name != '' && data.phone != ''){
         this.setState({isInvalid: false})
-        axios.post('http://192.168.0.6:3000/api/contacts/', data)
+        axios.post('http://192.168.0.11:3000/api/contacts/', data)
             .then(res => {
               this.props.dispatch(fetchContact())
               this.props.navigation.navigate('Home')

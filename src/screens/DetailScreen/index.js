@@ -6,21 +6,19 @@ import {
   Content,
   Text,
   Button,
-  List,
   Body,
   Left,
   Header,
   Right,
   Title,
-  Thumbnail,
   Card,
   CardItem
 } from 'native-base'
-import {TouchableOpacity, StyleSheet, View, Image, ActivityIndicator, Dimensions} from 'react-native'
+import { StyleSheet, View, Image, Dimensions} from 'react-native'
 import {Transition} from 'react-navigation-fluid-transitions';
 import * as C from '../../assets/styles/colors';
 import styles from './../../assets/styles/detail'
-import {getContact} from './../../actions/contactAct'
+import {getContact, fetchContact} from './../../actions/contactAct'
 
 
 class DetailContactScreen extends Component{
@@ -51,7 +49,7 @@ class DetailContactScreen extends Component{
          </Card>
         </Transition>
     )
-  }
+  } // renderEmailCard
 
   render(){
     const contact = this.props.contact.member
@@ -63,7 +61,10 @@ class DetailContactScreen extends Component{
            androidStatusBarColor= {C._STATUSBAR}
           >
            <Left>
-             <Button transparent onPress={() => this.props.navigation.pop()}>
+             <Button transparent onPress={() => {
+               this.props.dispatch(fetchContact())
+               this.props.navigation.pop()
+             }}>
               <Transition shared="btn-left">
                <Icon name='arrow-left' size={26} style={{color: 'white'}}/>
               </Transition>
@@ -166,7 +167,7 @@ class DetailContactScreen extends Component{
 
         <Button
             rounded
-            style={css.buttonEdit}
+            style={styles.buttonEdit}
             onPress={ () => this.props.navigation.push('Edit', {...contact, sc: "Detail"})}
         >
             <Icon name="edit-2" style={{fontSize: 28, color: '#fff', fontWeight: 'bold'}}/>
@@ -174,25 +175,12 @@ class DetailContactScreen extends Component{
 
       </Container>
     )
-  }
-}
+  } // render
+} // class
 
 const mapStateToProps = (state) => ({
   contact : state.contact
 })
 
-const css = StyleSheet.create({
-  buttonEdit: {
-    width: 55,
-    height: 55,
-    justifyContent: 'center',
-    position: 'absolute',
-    zIndex: 9999,
-    right: 30,
-    bottom: 40,
-    elevation: 4,
-    backgroundColor: C._ORANGE
-  }
-});
 
 export default connect(mapStateToProps)(DetailContactScreen)

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { Container, Content, Text, Button, Form, Input, Item, Label, Card, Header, Left, Right, Title, Body } from 'native-base'
-import {TouchableOpacity, Alert, ActivityIndicator} from 'react-native'
+import { Alert, ActivityIndicator} from 'react-native'
 import {connect} from 'react-redux';
 import axios from 'axios';
 import {fetchContact, getContact} from './../../actions/contactAct'
@@ -33,7 +33,7 @@ class EditScreen extends Component{
   }
 
   __deleteContact = (id) => {
-      axios.delete(`http://192.168.0.6:3000/api/contacts/${id}`)
+      axios.delete(`http://192.168.0.11:3000/api/contacts/${id}`)
             .then( res => {
               this.props.dispatch(fetchContact())
               this.props.navigation.navigate('Home')
@@ -54,7 +54,7 @@ class EditScreen extends Component{
     this.setState({isPressed: true})
 
     setTimeout(() => {
-      axios.put(`http://192.168.0.6:3000/api/contacts/${id}`, data)
+      axios.put(`http://192.168.0.11:3000/api/contacts/${id}`, data)
            .then(res => {
                if(contact.sc == "Home"){
                  this.props.dispatch(fetchContact())
