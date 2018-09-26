@@ -1,12 +1,13 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import { Container, Content, Text, Button, Form, Input, Item, Label, Card, Header, Left, Right, Title, Body } from 'native-base'
-import { Alert, ActivityIndicator} from 'react-native'
-import {connect} from 'react-redux';
-import axios from 'axios';
-import {fetchContact, getContact} from './../../actions/contactAct'
-import * as C from '../../assets/styles/colors';
+import { Alert, ActivityIndicator } from 'react-native'
+import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
-import {Transition} from 'react-navigation-fluid-transitions';
+import { Transition } from 'react-navigation-fluid-transitions';
+import axios from 'axios';
+import { fetchContact, getContact } from './../../actions/contactAct'
+import * as C from '../../assets/styles/colors';
+import Config from './../../../config/config';
 
 class EditScreen extends Component{
   static navigationOptions = ({navigation}) => ({
@@ -33,7 +34,7 @@ class EditScreen extends Component{
   }
 
   __deleteContact = (id) => {
-      axios.delete(`http://192.168.0.11:3000/api/contacts/${id}`)
+      axios.delete(Config.getAPI('contacts', id))
             .then( res => {
               this.props.dispatch(fetchContact())
               this.props.navigation.navigate('Home')
@@ -54,7 +55,7 @@ class EditScreen extends Component{
     this.setState({isPressed: true})
 
     setTimeout(() => {
-      axios.put(`http://192.168.0.11:3000/api/contacts/${id}`, data)
+      axios.put(Config.getAPI('contacts', id), data)
            .then(res => {
                if(contact.sc == "Home"){
                  this.props.dispatch(fetchContact())

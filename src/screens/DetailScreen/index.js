@@ -1,24 +1,12 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux';
+import React, { Component } from 'react'
+import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
-import {
-  Container,
-  Content,
-  Text,
-  Button,
-  Body,
-  Left,
-  Header,
-  Right,
-  Title,
-  Card,
-  CardItem
-} from 'native-base'
-import { StyleSheet, View, Image, Dimensions} from 'react-native'
-import {Transition} from 'react-navigation-fluid-transitions';
+import { Container, Content, Text, Button, Body, Left, Header, Right, Title, Card, CardItem } from 'native-base'
+import { StyleSheet, View, Image, Dimensions } from 'react-native'
+import { Transition } from 'react-navigation-fluid-transitions';
 import * as C from '../../assets/styles/colors';
 import styles from './../../assets/styles/detail'
-import {getContact, fetchContact} from './../../actions/contactAct'
+import { getContact, fetchContact } from './../../actions/contactAct'
 
 
 class DetailContactScreen extends Component{
@@ -83,7 +71,7 @@ class DetailContactScreen extends Component{
         <Content>
           <View style={{position: 'relative'}}>
             <Image
-              source={{uri: contact.avatar == null ? 'https://cdn.pixabay.com/photo/2017/08/05/12/05/wet-2583009_960_720.jpg' : contact.avatar}}
+              source={{uri: contact.avatar || 'https://cdn.pixabay.com/photo/2017/08/05/12/05/wet-2583009_960_720.jpg'}}
               style={{width: '100%', height: Dimensions.get('window').height/2, opacity: .8}}
               resizeMode='cover'
               blurRadius={10}
@@ -94,14 +82,14 @@ class DetailContactScreen extends Component{
                 <View>
                   <Image
                     style={styles.imageRounded}
-                    source={{uri: contact.avatar == null ? 'https://startupsclub.com/image/user-default.png' : contact.avatar}}/>
+                    source={{uri: contact.avatar || 'https://startupsclub.com/image/user-default.png'}}/>
                 </View>
               </Transition>
 
               <Transition appear='scale' >
                 <View style={styles.contactName}>
                   <Text style={{color: '#000', fontSize: 30}}>{contact.name}</Text>
-                  <Text style={{fontSize: 20, color: '#eee'}}>{contact.address == null ? 'Unknown' : contact.address}</Text>
+                  <Text style={{fontSize: 20, color: '#eee'}}>{contact.address || 'Unknown'}</Text>
                 </View>
               </Transition>
 

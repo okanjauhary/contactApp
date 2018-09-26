@@ -23,7 +23,7 @@ class HomeScreen extends Component {
     }}>
       <Left>
         <Transition shared={`image${index}`}>
-          <Thumbnail source={{ uri: item.avatar == null ? 'https://startupsclub.com/image/user-default.png' : item.avatar }} />
+          <Thumbnail source={{ uri: item.avatar || 'https://startupsclub.com/image/user-default.png'}} />
         </Transition>
       </Left>
       <Body>
