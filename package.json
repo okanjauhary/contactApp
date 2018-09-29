@@ -5,13 +5,15 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "app" : "react-native run-android"
+    "app": "react-native run-android"
   },
   "dependencies": {
     "axios": "^0.18.0",
     "native-base": "^2.8.0",
     "react": "16.5.0",
     "react-native": "0.57.0",
+    "react-native-checkbox": "^2.0.0",
+    "react-native-modal": "^6.5.0",
     "react-native-vector-icons": "^5.0.0",
     "react-navigation": "^2.14.2",
     "react-navigation-fluid-transitions": "^0.2.6",

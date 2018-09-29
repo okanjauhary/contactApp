@@ -31,5 +31,40 @@ export const styles = StyleSheet.create({
     backgroundColor: C._ORANGE,
     alignSelf: 'center',
     marginTop: 15
+  },
+  modalParent: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  modalContent: {
+    width: '80%',
+    padding: 20,
+    borderRadius: 8,
+    borderColor: '#eee',
+    borderWidth: 1,
+    backgroundColor: '#fff'
+  },
+  modalBackground: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    backgroundColor: '#000',
+    opacity: .8
+  },
+  modalButton: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginTop: 20
+  },
+  btnModalCancel: {
+    marginRight: 10,
+    backgroundColor: C._ORANGE
+  },
+  btnModalAdd: {
+    backgroundColor: C._BROWN
   }
 })

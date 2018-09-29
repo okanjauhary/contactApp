@@ -4,6 +4,7 @@ import HomeScreen from './../screens/HomeScreen'
 import CreateScreen from './../screens/CreateScreen'
 import DetailScreen from './../screens/DetailScreen'
 import EditScreen from './../screens/EditScreen'
+import DetailGroupScreen from './../screens/DetailGroupScreen'
 
 const Root = FluidNavigator({
   Home: {
@@ -26,6 +27,9 @@ const Root = FluidNavigator({
   },
   Edit: {
     screen : EditScreen
+  },
+  DetailGroup: {
+    screen: DetailGroupScreen
   }
 })
 

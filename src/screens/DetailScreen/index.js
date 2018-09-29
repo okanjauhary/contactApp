@@ -1,18 +1,20 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
-import { Container, Content, Text, Button, Body, Left, Header, Right, Title, Card, CardItem } from 'native-base'
-import { StyleSheet, View, Image, Dimensions } from 'react-native'
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { Container, Content, Text, Button, Body, Left, Header, Right, Title, Card, CardItem } from 'native-base';
+import { StyleSheet, View, Image, Dimensions, Modal } from 'react-native';
 import { Transition } from 'react-navigation-fluid-transitions';
 import * as C from '../../assets/styles/colors';
-import styles from './../../assets/styles/detail'
-import { getContact, fetchContact } from './../../actions/contactAct'
-
+import styles from './../../assets/styles/detail';
+import { getContact, fetchContact } from './../../actions/contactAct';
 
 class DetailContactScreen extends Component{
-
   constructor(props){
     super(props)
+    this.state = {
+      isModalVisible : false
+    }
   }
 
   renderEmailCard = (email) => {
@@ -63,10 +65,29 @@ class DetailContactScreen extends Component{
            </Body>
            <Right>
              <Button transparent>
+               <FontAwesome name='star-o' size={26} style={{color: "#eee"}}/>
+             </Button>
+             <Button transparent onPress={() => this.setState({isModalVisible: true})}>
                <Icon name='more-vertical' size={26} style={{color: 'white'}}/>
              </Button>
            </Right>
          </Header>
+
+         <Modal
+            visible={this.state.isModalVisible}
+            transparent={true}
+            animationType='fade'
+            onRequestClose={() => alert("modal closed")}>
+            <View style={styles.modalParent}>
+              <View style={styles.modalBackground}></View>
+              <View style={styles.modalContent}>
+                <Text style={{fontWeight: 'bold', marginBottom: 15}}>Tambah group</Text>
+                <Button onPress={() => this.setState({isModalVisible: false})}>
+                  <Text>hide</Text>
+                </Button>
+              </View>
+            </View>
+          </Modal>
 
         <Content>
           <View style={{position: 'relative'}}>
@@ -113,7 +134,7 @@ class DetailContactScreen extends Component{
                    </CardItem>
                 </Card>
             </Transition>
-
+            
               {
                 this.renderEmailCard(contact.email)
               }
