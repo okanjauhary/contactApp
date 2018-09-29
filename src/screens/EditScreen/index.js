@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
 import { Transition } from 'react-navigation-fluid-transitions';
 import axios from 'axios';
-import { fetchContact, getContact, updateContact } from './../../actions/contactAct'
+import { fetchContact, getContact, updateContact, deleteContact } from './../../actions/contactAct'
 import * as C from '../../assets/styles/colors';
 import Config from './../../../config/config';
 
@@ -34,11 +34,8 @@ class EditScreen extends Component{
   }
 
   __deleteContact = (id) => {
-      axios.delete(Config.getAPI('contacts', id))
-            .then( res => {
-              this.props.dispatch(fetchContact())
-              this.props.navigation.navigate('Home')
-            })
+    this.props.dispatch(deleteContact(id))
+    this.props.navigation.navigate('Home')
   }
 
   __editContact = (id) => {
@@ -48,7 +45,7 @@ class EditScreen extends Component{
       "avatar": this.state.avatar == '' ? null : this.state.avatar,
       "email" : this.state.email == '' ? null : this.state.email,
       "address" : this.state.address == '' ? null : this.state.address
-    }    
+    }
     this.setState({isPressed: true})
     this.props.dispatch(updateContact(id, data))
     setTimeout(() => {

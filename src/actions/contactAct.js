@@ -36,3 +36,13 @@ export function updateContact(id, value) {
     })
   }
 }
+
+export function deleteContact(id) {
+  return {
+    type: "DELETE_CONTACT",
+    payload: axios({
+      method: 'DELETE',
+      url: `http://192.168.0.11:8000/api/contacts/${id}`
+    })
+  }
+}

@@ -83,6 +83,29 @@ const dataContact = (state = initialState, action) => {
           fetching: false,
           error: action.payload
         }
+
+      case "DELETE_CONTACT_PENDING":
+          return {
+            ...state,
+            fetching: true
+          }
+      case "DELETE_CONTACT_FULFILLED":
+          const contactListAfterDeleted = state.data.filter(contact => {
+            return contact._id != action.payload.data._id
+          })
+          return {
+            ...state,
+            fetching: false,
+            fetched: true,
+            data: contactListAfterDeleted
+          }
+      case "DELETE_CONTACT_REJECTED":
+          return {
+            ...state,
+            fetching: false,
+            error: action.payload
+          }
+
     default:
       return state
   }
