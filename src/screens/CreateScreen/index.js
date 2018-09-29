@@ -5,7 +5,7 @@ import { Container, Content, Text, Button, Form, Input, Item, Label, Card, Heade
 import { ActivityIndicator, View, Clipboard } from 'react-native'
 import { Transition } from 'react-navigation-fluid-transitions';
 import Icon from 'react-native-vector-icons/Feather';
-import { fetchContact } from './../../actions/contactAct'
+import { createContact } from './../../actions/contactAct'
 import * as C from '../../assets/styles/colors';
 import Config from './../../../config/config'
 
@@ -32,11 +32,8 @@ class CreateScreen extends Component{
     setTimeout(() => {
       if(data.name != '' && data.phone != ''){
         this.setState({isInvalid: false})
-        axios.post(Config.getAPI('contacts'), data)
-            .then(res => {
-              this.props.dispatch(fetchContact())
-              this.props.navigation.navigate('Home')
-            })
+        this.props.dispatch(createContact(data))
+        this.props.navigation.navigate('Home')
       }else{
         this.setState({isPressed: false})
         this.setState({isInvalid: true})
