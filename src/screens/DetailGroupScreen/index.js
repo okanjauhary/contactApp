@@ -67,10 +67,14 @@ class DetailGroupScreen extends Component{
       let data = {contacts: this.state.dataContact}
       axios.put(Config.getAPI('groups', this.props.group.group._id), data)
       .then(success => {
-        this.props.dispatch(getGroup(this.props.group.group._id))
-        this.setState({isModalVisible: false})
+          this.setState({dataContact: []})
+          this.props.dispatch(getGroup(this.props.group.group._id))
+          this.setState({isModalVisible: false})
       })
+    }else{
+      this.setState({isModalVisible: false})
     }
+
   }
 
   renderContact = ({item, index}) => (
