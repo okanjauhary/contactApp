@@ -7,7 +7,7 @@ import { StyleSheet, View, Image, Dimensions, Modal } from 'react-native';
 import { Transition } from 'react-navigation-fluid-transitions';
 import * as C from '../../assets/styles/colors';
 import styles from './../../assets/styles/detail';
-import { getContact, fetchContact } from './../../actions/contactAct';
+import { fetchContact } from './../../actions/contactAct';
 
 class DetailContactScreen extends Component{
   constructor(props){
@@ -134,7 +134,7 @@ class DetailContactScreen extends Component{
                    </CardItem>
                 </Card>
             </Transition>
-            
+
               {
                 this.renderEmailCard(contact.email)
               }

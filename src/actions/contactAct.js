@@ -25,3 +25,14 @@ export function createContact(value) {
     })
   }
 }
+
+export function updateContact(id, value) {
+  return {
+    type: "UPDATE_CONTACT",
+    payload: axios({
+      method: 'PUT',
+      url: `http://192.168.0.11:8000/api/contacts/${id}`,
+      data: value
+    })
+  }
+}

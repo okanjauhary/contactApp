@@ -64,6 +64,25 @@ const dataContact = (state = initialState, action) => {
             fetching: false,
             error: action.payload
           }
+
+    case "UPDATE_CONTACT_PENDING":
+        return {
+          ...state,
+          fetching: true
+        }
+    case "UPDATE_CONTACT_FULFILLED":
+        return {
+          ...state,
+          fetching: false,
+          fetched: true,
+          member: action.payload.data
+        }
+    case "UPDATE_CONTACT_REJECTED":
+        return {
+          ...state,
+          fetching: false,
+          error: action.payload
+        }
     default:
       return state
   }

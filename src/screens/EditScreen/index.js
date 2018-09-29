@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
 import { Transition } from 'react-navigation-fluid-transitions';
 import axios from 'axios';
-import { fetchContact, getContact } from './../../actions/contactAct'
+import { fetchContact, getContact, updateContact } from './../../actions/contactAct'
 import * as C from '../../assets/styles/colors';
 import Config from './../../../config/config';
 
@@ -48,25 +48,11 @@ class EditScreen extends Component{
       "avatar": this.state.avatar == '' ? null : this.state.avatar,
       "email" : this.state.email == '' ? null : this.state.email,
       "address" : this.state.address == '' ? null : this.state.address
-    }
-
-    let contact = this.props.navigation.state.params
-
+    }    
     this.setState({isPressed: true})
-
+    this.props.dispatch(updateContact(id, data))
     setTimeout(() => {
-      axios.put(Config.getAPI('contacts', id), data)
-           .then(res => {
-               if(contact.sc == "Home"){
-                 this.props.dispatch(fetchContact())
-               }
-
-               if(contact.sc == "Detail"){
-                 this.props.dispatch(getContact(contact._id))
-               }
-
-               this.props.navigation.pop()
-           })
+      this.props.navigation.pop()
     }, 1000);
   }
 
