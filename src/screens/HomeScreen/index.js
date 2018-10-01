@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, FlatList, Dimensions, Modal, AsyncStorage } from 'react-native'
 import { Container, Header, Content, ListItem, Button, Thumbnail, Text, Left, Right, Body, Title, Tabs, Tab, TabHeading, Input, Form, Item } from 'native-base'
 import Icon from 'react-native-vector-icons/Feather';
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { Transition } from 'react-navigation-fluid-transitions';
 import axios from 'axios';
 import * as C from '../../assets/styles/colors';
@@ -10,7 +10,6 @@ import { styles } from '../../assets/styles/home';
 import Config from '../../../config/config';
 import { fetchContact, getContact } from './../../actions/contactAct'
 import { fetchGroup, getGroup } from './../../actions/groupAct'
-
 
 class HomeScreen extends Component {
   state = {
