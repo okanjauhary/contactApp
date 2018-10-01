@@ -4,7 +4,7 @@ import Config from './../../config/config';
 export function fetchContact(){
   return {
     type: "FETCH_CONTACT",
-    payload: axios.get(Config.getAPI('contacts'))
+    payload: axios.get('http://192.168.0.11:8000/api/contacts')
   }
 }
 

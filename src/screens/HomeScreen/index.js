@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, FlatList, Dimensions, Modal } from 'react-native'
+import { View, FlatList, Dimensions, Modal, AsyncStorage } from 'react-native'
 import { Container, Header, Content, ListItem, Button, Thumbnail, Text, Left, Right, Body, Title, Tabs, Tab, TabHeading, Input, Form, Item } from 'native-base'
 import Icon from 'react-native-vector-icons/Feather';
 import {connect} from 'react-redux'
@@ -76,10 +76,10 @@ class HomeScreen extends Component {
             </Button>
           </Left>
           <Body>
-            <Title>Contact list</Title>
+            <Title>Contact</Title>
           </Body>
           <Right>
-            <Button transparent>
+            <Button transparent onPress={() => this.props.navigation.navigate('Login')}>
               <Icon name='search' size={26} style={{color: 'white'}}/>
             </Button>
           </Right>

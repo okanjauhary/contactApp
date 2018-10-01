@@ -5,6 +5,7 @@ import CreateScreen from './../screens/CreateScreen'
 import DetailScreen from './../screens/DetailScreen'
 import EditScreen from './../screens/EditScreen'
 import DetailGroupScreen from './../screens/DetailGroupScreen'
+import LoginScreen from './../screens/LoginScreen'
 
 const Root = FluidNavigator({
   Home: {
@@ -30,6 +31,9 @@ const Root = FluidNavigator({
   },
   DetailGroup: {
     screen: DetailGroupScreen
+  },
+  Login: {
+    screen: LoginScreen
   }
 })
 

@@ -1,0 +1,139 @@
+warning: LF will be replaced by CRLF in package-lock.json.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in package.json.
+The file will have its original line endings in your working directory
+[1mdiff --git a/package-lock.json b/package-lock.json[m
+[1mindex f26f60e..dbb445e 100644[m
+[1m--- a/package-lock.json[m
+[1m+++ b/package-lock.json[m
+[36m@@ -7039,14 +7039,6 @@[m
+         "yargs": "^9.0.0"[m
+       }[m
+     },[m
+[31m-    "react-native-animatable": {[m
+[31m-      "version": "1.3.0",[m
+[31m-      "resolved": "https://registry.npmjs.org/react-native-animatable/-/react-native-animatable-1.3.0.tgz",[m
+[31m-      "integrity": "sha512-GGYEYvderfzPZcPnw7xov4nlRmi9d6oqcIzx0fGkUUsMshOQEtq5IEzFp3np0uTB9n8/gZIZcdbUPggVlVydMg==",[m
+[31m-      "requires": {[m
+[31m-        "prop-types": "^15.5.10"[m
+[31m-      }[m
+[31m-    },[m
+     "react-native-checkbox": {[m
+       "version": "2.0.0",[m
+       "resolved": "https://registry.npmjs.org/react-native-checkbox/-/react-native-checkbox-2.0.0.tgz",[m
+[36m@@ -7107,15 +7099,6 @@[m
+         "react-native-iphone-x-helper": "^1.0.1"[m
+       }[m
+     },[m
+[31m-    "react-native-modal": {[m
+[31m-      "version": "6.5.0",[m
+[31m-      "resolved": "https://registry.npmjs.org/react-native-modal/-/react-native-modal-6.5.0.tgz",[m
+[31m-      "integrity": "sha512-ewchdETAGd32xLGLK93NETEGkRcePtN7ZwjmLSQnNW1Zd0SRUYE8NqftjamPyfKvK0i2DZjX4YAghGZTqaRUbA==",[m
+[31m-      "requires": {[m
+[31m-        "prop-types": "^15.6.1",[m
+[31m-        "react-native-animatable": "^1.2.4"[m
+[31m-      }[m
+[31m-    },[m
+     "react-native-safe-area-view": {[m
+       "version": "0.10.0",[m
+       "resolved": "https://registry.npmjs.org/react-native-safe-area-view/-/react-native-safe-area-view-0.10.0.tgz",[m
+[1mdiff --git a/package.json b/package.json[m
+[1mindex 2e0384d..8ec3446 100644[m
+[1m--- a/package.json[m
+[1m+++ b/package.json[m
+[36m@@ -13,7 +13,6 @@[m
+     "react": "16.5.0",[m
+     "react-native": "0.57.0",[m
+     "react-native-checkbox": "^2.0.0",[m
+[31m-    "react-native-modal": "^6.5.0",[m
+     "react-native-vector-icons": "^5.0.0",[m
+     "react-navigation": "^2.14.2",[m
+     "react-navigation-fluid-transitions": "^0.2.6",[m
+[1mdiff --git a/src/actions/contactAct.js b/src/actions/contactAct.js[m
+[1mindex 31e4267..03443ca 100644[m
+[1m--- a/src/actions/contactAct.js[m
+[1m+++ b/src/actions/contactAct.js[m
+[36m@@ -4,7 +4,7 @@[m [mimport Config from './../../config/config';[m
+ export function fetchContact(){[m
+   return {[m
+     type: "FETCH_CONTACT",[m
+[31m-    payload: axios.get(Config.getAPI('contacts'))[m
+[32m+[m[32m    payload: axios.get('http://192.168.0.11:8000/api/contacts')[m
+   }[m
+ }[m
+ [m
+[1mdiff --git a/src/navigator/Root.js b/src/navigator/Root.js[m
+[1mindex 8f9be79..d070b5d 100644[m
+[1m--- a/src/navigator/Root.js[m
+[1m+++ b/src/navigator/Root.js[m
+[36m@@ -5,6 +5,7 @@[m [mimport CreateScreen from './../screens/CreateScreen'[m
+ import DetailScreen from './../screens/DetailScreen'[m
+ import EditScreen from './../screens/EditScreen'[m
+ import DetailGroupScreen from './../screens/DetailGroupScreen'[m
+[32m+[m[32mimport LoginScreen from './../screens/LoginScreen'[m
+ [m
+ const Root = FluidNavigator({[m
+   Home: {[m
+[36m@@ -30,6 +31,9 @@[m [mconst Root = FluidNavigator({[m
+   },[m
+   DetailGroup: {[m
+     screen: DetailGroupScreen[m
+[32m+[m[32m  },[m
+[32m+[m[32m  Login: {[m
+[32m+[m[32m    screen: LoginScreen[m
+   }[m
+ })[m
+ [m
+[1mdiff --git a/src/screens/CreateScreen/index.js b/src/screens/CreateScreen/index.js[m
+[1mindex a928d02..a993ff3 100644[m
+[1m--- a/src/screens/CreateScreen/index.js[m
+[1m+++ b/src/screens/CreateScreen/index.js[m
+[36m@@ -2,7 +2,7 @@[m [mimport React, { Component } from 'react'[m
+ import axios from 'axios'[m
+ import { connect } from 'react-redux';[m
+ import { Container, Content, Text, Button, Form, Input, Item, Label, Card, Header, Right, Left, Title, Body } from 'native-base'[m
+[31m-import { ActivityIndicator, View, Clipboard } from 'react-native'[m
+[32m+[m[32mimport { ActivityIndicator, View, Clipboard, AsyncStorage } from 'react-native'[m
+ import { Transition } from 'react-navigation-fluid-transitions';[m
+ import Icon from 'react-native-vector-icons/Feather';[m
+ import { createContact } from './../../actions/contactAct'[m
+[36m@@ -29,6 +29,7 @@[m [mclass CreateScreen extends Component{[m
+       "avatar": (this.state.avatar == '') ? null : this.state.avatar[m
+     }[m
+     this.setState({isPressed: true})[m
+[32m+[m[32m    this.saveUserId[m
+     setTimeout(() => {[m
+       if(data.name != '' && data.phone != ''){[m
+         this.setState({isInvalid: false})[m
+[36m@@ -43,7 +44,6 @@[m [mclass CreateScreen extends Component{[m
+   }[m
+ [m
+   render(){[m
+[31m-[m
+     const {isInvalid, name, phone} = this.state;[m
+ [m
+     return([m
+[1mdiff --git a/src/screens/HomeScreen/index.js b/src/screens/HomeScreen/index.js[m
+[1mindex c4fb73e..29cefb0 100644[m
+[1m--- a/src/screens/HomeScreen/index.js[m
+[1m+++ b/src/screens/HomeScreen/index.js[m
+[36m@@ -1,5 +1,5 @@[m
+ import React, { Component } from 'react';[m
+[31m-import { View, FlatList, Dimensions, Modal } from 'react-native'[m
+[32m+[m[32mimport { View, FlatList, Dimensions, Modal, AsyncStorage } from 'react-native'[m
+ import { Container, Header, Content, ListItem, Button, Thumbnail, Text, Left, Right, Body, Title, Tabs, Tab, TabHeading, Input, Form, Item } from 'native-base'[m
+ import Icon from 'react-native-vector-icons/Feather';[m
+ import {connect} from 'react-redux'[m
+[36m@@ -76,10 +76,10 @@[m [mclass HomeScreen extends Component {[m
+             </Button>[m
+           </Left>[m
+           <Body>[m
+[31m-            <Title>Contact list</Title>[m
+[32m+[m[32m            <Title>Contact</Title>[m
+           </Body>[m
+           <Right>[m
+[31m-            <Button transparent>[m
+[32m+[m[32m            <Button transparent onPress={() => this.props.navigation.navigate('Login')}>[m
+               <Icon name='search' size={26} style={{color: 'white'}}/>[m
+             </Button>[m
+           </Right>[m

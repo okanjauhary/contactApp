@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux';
 import { Container, Content, Text, Button, Form, Input, Item, Label, Card, Header, Right, Left, Title, Body } from 'native-base'
-import { ActivityIndicator, View, Clipboard } from 'react-native'
+import { ActivityIndicator, View, Clipboard, AsyncStorage } from 'react-native'
 import { Transition } from 'react-navigation-fluid-transitions';
 import Icon from 'react-native-vector-icons/Feather';
 import { createContact } from './../../actions/contactAct'
@@ -29,6 +29,7 @@ class CreateScreen extends Component{
       "avatar": (this.state.avatar == '') ? null : this.state.avatar
     }
     this.setState({isPressed: true})
+    this.saveUserId
     setTimeout(() => {
       if(data.name != '' && data.phone != ''){
         this.setState({isInvalid: false})
@@ -43,7 +44,6 @@ class CreateScreen extends Component{
   }
 
   render(){
-
     const {isInvalid, name, phone} = this.state;
 
     return(
